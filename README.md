@@ -1,12 +1,12 @@
 # Django Example
 
-version 1.10
+Django version 1.10
 
 python 2.7
 
 ### Installation
 
-create virtualenv
+Create virtualenv
 ```
 sudo apt-get install python3-virtualenv   
 virtualenv -p python2.7 venv
