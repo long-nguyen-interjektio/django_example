@@ -7,3 +7,4 @@
 psycopg2==2.8.5           # via -r requirements.in
 
 Django~=1.10
+pathlib~=1.0.1
