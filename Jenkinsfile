@@ -5,9 +5,10 @@ node {
     try {
         stage 'Test'
             sh 'virtualenv env -p python'
-            sh '. env/bin/activate'
-            sh 'env/bin/pip install -r requirements.txt'
-            sh 'env/bin/python manage.py test polls.tests_view'
+            sh 'source env/bin/activate'
+            sh 'ls'
+            sh 'pip install -r requirements.txt'
+            sh 'python manage.py test polls.tests_view'
     }
 
     catch (err) {
