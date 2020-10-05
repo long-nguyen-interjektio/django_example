@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+  postgresdb:
+    image: postgres:12.0-alpine
+    container_name: postgresdb
+    volumes:
+      - ${POSTGRESQL_DATA_ROOT}:/var/lib/postgresdb/data
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - 5555:5432
+    networks:
+      - sensdb-network
+
+  sensdb:
+    image: "sensdb-container:latest"
+    container_name: sensdb
+    networks:
+      - sensdb-network
+    depends_on:
+      - postgresdb
+    ports:
+      - 8000:8000
+    working_dir: /src/django_example
+    command: bash docker_entrypoint.sh
+    volumes:
+    - .:/src/django_example:rw
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - DB_HOST=postgresdb
+    user: ${CURRENT_UID}:${CURRENT_GID}
+
+networks:
+  sensdb-network:

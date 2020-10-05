@@ -8,3 +8,5 @@ media
 mysite/settings.pyc
 .idea/*
 venv/*
+build/
+*.egg-info

@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'djangoexample',
         'USER': 'djangoexample',
         'PASSWORD': 'djangoexample',
-        'HOST': '127.0.0.1',
+        'HOST': os.environ.get('DB_HOST'),
         'PORT': '5432',
         'TEST': {
             'NAME': 'test_djangoexample',
