@@ -3,9 +3,8 @@
 node {
 
     try {
-        stage 'Test'
+        stage 'generate file'
             sh 'ls -a'
-            sh 'tag-images.sh'
     }
 
     catch (err) {

@@ -16,4 +16,3 @@ chown -R "$CURRENT_UID:$CURRENT_GID" /src/django_example/.
 
 cd "$PROJECT_PATH" && python manage.py test
 
-
