@@ -3,21 +3,17 @@
 node {
     checkout scm
     try {
-        stage ('CHECK DIR') {
-            sh 'ls -a'
+        stage ('CHECKOUT') {
+            sh 'git log HEAD^..HEAD --pretty="%h %an - %s" > GIT_CHANGES.txt'
+            def lastChanges = readFile('GIT_CHANGES.txt')
+            slackSend color: "warning", message: "Started `${env.JOB_NAME}#${env.BUILD_NUMBER}`\n\n_The changes:_\n${lastChanges}"
         }
-        stage ('GRANT PERMISSION') {
-            sh 'groupadd docker'
-            sh 'usermod -aG docker $USER'
-            sh 'chmod 0700 /var/run/docker.sock'
-            sh 'chmod 0700 tag-images.sh Dockerfile'
-        }
-        stage ('run docker') {
-            sh './tag-images.sh'
+        stage ('TEST') {
+            slackSend color: "good", message: "Build successful: `${env.JOB_NAME}#${env.BUILD_NUMBER}` <${env.BUILD_URL}|Open in Jenkins>"
         }
     }
-
     catch (err) {
+        slackSend color: "danger", message: "Build failed :face_with_head_bandage: \n`${env.JOB_NAME}#${env.BUILD_NUMBER}` <${env.BUILD_URL}|Open in Jenkins>"
         throw err
     }
 
